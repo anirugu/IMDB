@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - main # Default release branch, may also be named 'master' or 'develop'
+jobs:
+  publish:
+    name: build, pack & publish
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: 7.0.x
+            dotnet-quality: 'daily'
+            source-url: https://nuget.pkg.github.com/anirugu/index.json
+          env:
+            NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        - name: Build
+          run: dotnet build --configuration Release
+        - name: Pack
+          run: dotnet pack IMDB.csproj --output nuget-packages --configuration Release
+        - name: Push
+          run: dotnet nuget push **/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/anirugu/index.json
