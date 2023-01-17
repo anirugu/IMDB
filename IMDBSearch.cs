@@ -4,7 +4,7 @@ using AngleSharp.Html.Parser;
 
 namespace IMDB
 {
-    public class IMDBSearch
+    public class IMDBSearch : IIMDBSearch
     {
         private readonly IHtmlDocument _document;
 
