@@ -1,4 +1,5 @@
-﻿using AngleSharp.Browser;
+﻿using AngleSharp;
+using AngleSharp.Browser;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 
@@ -7,11 +8,21 @@ namespace IMDB
     public class IMDBSearch : IIMDBSearch
     {
         private readonly IHtmlDocument _document;
+        private readonly IHtmlParser _parser;
 
-        public IMDBSearch(string html)
+        public IMDBSearch(string html) : this()
         {
-            var parser = new HtmlParser();
-            _document = parser.ParseDocument(html);
+            _document = _parser.ParseDocumentAsync(html).Result;
+        }
+
+        public IMDBSearch(Stream html) : this()
+        {
+            _document = _parser.ParseDocumentAsync(html).Result;
+        }
+
+        public IMDBSearch()
+        {
+            _parser = new HtmlParser();
         }
 
         public IEnumerable<string> GetShortCodes()
