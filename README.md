@@ -1,0 +1,1 @@
+This repository exists solely to illustrate the process of creating a package on Github. For instance, this repository publishes a package at this URL: https://github.com/anirugu/IMDB/pkgs/nuget/IMDB.
